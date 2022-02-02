@@ -15,13 +15,6 @@ export const ReactPlayerComponent = () => {
         }
     }
 
-    // useEffect(() => {
-    //
-    //     setTimeout(() => {
-    //         setShowNavLink(true)
-    //     }, 5000)
-    // }, [showNavLink])
-
     return (
         <div className={styles.playerContainer}>
             <ReactPlayer height={'100%'}
