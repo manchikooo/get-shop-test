@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 720px;
+    width: 1280px;
+}
+
+.playerContainer {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+}
+
+.bannerStyle {
+    position: absolute;
+    top: 70%;
+    left: 85%;
+    width: 150px;
+    height: 100px;
+    background-color: red;
+}
