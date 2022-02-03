@@ -1,22 +1,33 @@
 import React, {useState} from 'react';
-import NumberFormat from 'react-number-format'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import styles from './PhonePage.module.css'
 
 const PhonePage = () => {
 
-    const [phoneValue, setPhoneValue] = useState<string>('')
+    const [phoneValue, setPhoneValue] = useState<string>('+7')
+    const [agreement, setAgreement] = useState<boolean>(false)
+
     console.log(phoneValue)
 
-    const changePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.value)
-        setPhoneValue(e.currentTarget.value)
+    const changePhoneNumber = (e: string) => {
+        console.log(e)
+        if (phoneValue.length < 12) {
+            return setPhoneValue(e)
+        }
     }
 
     const onClickHandler = (number: string) => {
-        setPhoneValue(phoneValue => phoneValue + number)
+        if (phoneValue.length < 12) {
+            return setPhoneValue(phoneValue => phoneValue + number)
+        }
     }
     const removeLastNumber = () => {
-        setPhoneValue(phoneValue => phoneValue.slice(0, -1))
+        if (phoneValue === '+7') {
+            return
+        } else {
+            return setPhoneValue(phoneValue => phoneValue.slice(0, -1))
+        }
     }
 
     const buttons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
@@ -32,23 +43,29 @@ const PhonePage = () => {
     return (
         <div className={styles.phonePageContainer}>
             <div className={styles.phoneInputBlock}>
-                <NumberFormat className={styles.phoneInput}
-                              placeholder='+7 (___) ___-__-__'
-                              format="+7 (###) ###-##-##"
-                              allowEmptyFormatting
-                              mask="_"
-                              value={phoneValue}
-                              onChange={changePhoneNumber}
+                <PhoneInput onlyCountries={['ru']}
+                            placeholder='+7(___)___-__-__'
+                            searchPlaceholder={'+7(___)___-__-__'}
+                            inputStyle={{
+                                padding: '25px',
+                                width: '350px',
+                                marginLeft: '30px',
+                                fontSize: '25px',
+                                textAlign: 'center'
+                            }}
+                            country={'ru'}
+                            value={phoneValue}
+                            onChange={e => changePhoneNumber(e)}
+                            masks={{ru: '(...) ...-..-..'}}
                 />
                 <div className={styles.buttonsBlock}>
                     {mappedButtons}
                     <button className={styles.deleteButton}
                             onClick={removeLastNumber}>
-                        стереть
+                        Удалить
                     </button>
                 </div>
             </div>
-
         </div>
     );
 };
