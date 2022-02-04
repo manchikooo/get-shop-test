@@ -3,7 +3,7 @@ import styles from './App.module.css'
 import {ReactPlayerComponent} from "./components/ReactPlayer/ReactPlayer";
 import {Routes, Route} from "react-router-dom";
 import {Presentation} from "./components/Presentation/Presentation";
-import PhonePage from "./components/PhonePage/PhonePage";
+import {PhonePage} from "./components/PhonePage/PhonePage";
 
 function App() {
 

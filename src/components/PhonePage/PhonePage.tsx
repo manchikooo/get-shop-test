@@ -47,16 +47,15 @@ const items = [
     {id: 200, name: 'Получить персональное предложение'},
     {id: 300, name: 'Отмена'},
 ]
-const i = items[0]
+
 type ItemType = {
     id: number,
     name: string
 }
 
-type ListItemType = {
+type ButtonNumberType = {
     item: ItemType,
     active: boolean,
-    // setSelected: Dispatch<SetStateAction<SetStateAction<ItemType | undefined>>>,
     setSelected: Dispatch<SetStateAction<string | undefined>>,
     setHovered: Dispatch<SetStateAction<ItemType | undefined>>,
     setPhoneValue: Dispatch<SetStateAction<string>>
@@ -65,25 +64,23 @@ type DeleteButtonType = {
     item: ItemType,
     active: boolean,
 }
+type PersonalDataCheckboxType = DeleteButtonType
 
+type PersonalOfferType = {
+    item: ItemType,
+    active: boolean,
+    disable: boolean
+}
 
-// <div className={`item ${active ? styles.activeItem : ''}`}
-//      onClick={() => setSelected(item)}
-//      onMouseEnter={() => setHovered(item)}
-//      onMouseLeave={() => setHovered(undefined)}
-// >
-//     {item.name}
-// </div>
+type BackButtonType = DeleteButtonType
 
-
-const PhonePage = () => {
+export const PhonePage = () => {
 
     const [phoneValue, setPhoneValue] = useState<string>('')
     const [agreement, setAgreement] = useState<boolean>(false)
     const [modalActive, setModalActive] = useState<boolean>(false)
 
     const searchBox = createRef<HTMLInputElement>()
-    // const [selected, setSelected] = useState<React.SetStateAction<ItemType | undefined>>(undefined);
     const [selected, setSelected] = useState<string | undefined>('')
     const [cursor, setCursor] = useState<number>(0);
     const [hovered, setHovered] = useState<ItemType | undefined>(undefined);
@@ -92,10 +89,10 @@ const PhonePage = () => {
     const leftPress = useKeyPress('ArrowLeft', searchBox);
     const rightPress = useKeyPress('ArrowRight', searchBox);
     const enterPress = useKeyPress('Enter', searchBox);
-    const [searchItem, setSearchItem] = useState<string>("")
+    const navigationBack = useNavigate()
 
-    const ListItem = ({item, active, setSelected, setHovered, setPhoneValue}: ListItemType) => (
-        <button className={`item ${active ? styles.activeItem : styles.phoneNumberButton}`}
+    const ButtonNumber = ({item, active, setHovered}: ButtonNumberType) => (
+        <button className={`item ${active ? styles.activePhoneNumberButton : styles.phoneNumberButton}`}
                 onClick={() => onNumberButtonClickHandler(item.id.toString())}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
@@ -104,18 +101,48 @@ const PhonePage = () => {
         </button>)
 
     const DeleteButton = ({item, active}: DeleteButtonType) => (
-        <button className={`item ${active ? styles.activeItem : styles.phoneNumberButton}`}
+        <button className={`item ${active ? styles.activeDeleteButton : styles.deleteButton}`}
                 onClick={removeLastNumber}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
         >
             {item.name}
-        </button>)
+        </button>
+    )
 
-    const handelChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-        setSelected(undefined)
-        setSearchItem(e.currentTarget.value)
-    }
+    const PersonalDataCheckBox = ({item, active}: PersonalDataCheckboxType) => (
+        <div className={`item ${active ? styles.activeCheckboxContainerStyle : styles.checkboxContainerStyle}`}
+             onMouseEnter={() => setHovered(item)}
+             onMouseLeave={() => setHovered(undefined)}
+        >
+            <input
+                type='checkbox'
+                checked={agreement}
+                onChange={onPersonalDataCheckboxClick}
+            />{item.name}
+        </div>
+    )
+
+    const PersonalOffer = ({item, active, disable}: PersonalOfferType) => (
+        <button className={`item ${active ? styles.activeOfferButton : styles.offerButton}`}
+                onClick={() => setModalActive(true)}
+                onMouseEnter={() => setHovered(item)}
+                onMouseLeave={() => setHovered(undefined)}
+                disabled={disable}
+        >
+            {item.name}
+        </button>
+    )
+    const BackButton = ({item, active}: BackButtonType) => (
+        <button className={`item ${active ? styles.activeOfferButton : styles.offerButton}`}
+                onClick={() => navigationBack(-1)}
+                onMouseEnter={() => setHovered(item)}
+                onMouseLeave={() => setHovered(undefined)}
+        >
+            {item.name}
+        </button>
+    )
+
     console.log(cursor)
     useEffect(() => {
         if (items.length && downPress) {
@@ -144,6 +171,12 @@ const PhonePage = () => {
     useEffect(() => {
         if (items[cursor].name === 'Delete' && enterPress) {
             removeLastNumber()
+        } else if (items[cursor].id === 100 && enterPress) {
+            setAgreement(!agreement)
+        } else if (items[cursor].id === 200 && enterPress) {
+            setModalActive(true)
+        } else if (items[cursor].id === 300 && enterPress) {
+            navigationBack(-1)
         } else if (items.length && enterPress && phoneValue.length === 0) {
             setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
         } else if (items.length && enterPress) {
@@ -156,8 +189,6 @@ const PhonePage = () => {
         }
     }, [hovered]);
 
-
-    const navigationBack = useNavigate()
 
     const changePhoneNumber = (e: string) => {
         console.log(e)
@@ -195,62 +226,42 @@ const PhonePage = () => {
         setAgreement(e.currentTarget.checked)
     }
 
-
-    // const buttons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    // const mappedButtons = buttons.map(but => {
-    //     return (
-    //         <button key={but}
-    //                 tabIndex={+but}
-    //                 className={styles.phoneNumberButton}
-    //                 onClick={() => onNumberButtonClickHandler(but)}>
-    //             {but}
-    //         </button>
-    //     )
-    // })
     const parameterForDisablePersonalOfferButton = !(phoneValue.length === 11 && agreement)
 
     const mappedButtonsNumbers = items.map((item, i) => {
-            if (items[i].id === 100) {
-                return <div key={item.id}>
-                    <input className={styles.checkboxStyle}
-                           type='checkbox'
-                           checked={agreement}
-                           onChange={onPersonalDataCheckboxClick}
-                    />{item.name}</div>
-            }
-            if (items[i].id === 300) {
-                return <div key={item.id}>
-                    <button onClick={() => navigationBack(-1)}
-                            className={styles.navigationBackButton}
-                    >
-                        {item.name}
-                    </button>
-                </div>
-            }
             if (items[i].id < 10) {
-                return <ListItem key={item.id}
-                                 active={i === cursor}
-                                 item={item}
-                                 setSelected={setSelected}
-                                 setHovered={setHovered}
-                                 setPhoneValue={setPhoneValue}
-                    // onClick={}
+                return <ButtonNumber key={item.id}
+                                     active={i === cursor}
+                                     item={item}
+                                     setSelected={setSelected}
+                                     setHovered={setHovered}
+                                     setPhoneValue={setPhoneValue}
                 />
             }
             if (items[i].id === 10) {
-                return <DeleteButton key={item.id} active={i === cursor} item={item}/>
-                // return <div key={item.id}
-                //             className={{active ? styles.activeItem : styles.phoneNumberButton}}
-                //             onClick={removeLastNumber}>
-                //     <button>{item.name}</button>
-                // </div>
-
+                return <DeleteButton key={item.id}
+                                     active={i === cursor}
+                                     item={item}
+                />
+            }
+            if (items[i].id === 100) {
+                return <PersonalDataCheckBox key={item.id}
+                                             active={i === cursor}
+                                             item={item}
+                />
             }
             if (items[i].id === 200) {
-                return <div key={item.id}>
-                    <button onClick={() => {
-                    }}>{item.name}</button>
-                </div>
+                return <PersonalOffer key={item.id}
+                                      active={i === cursor}
+                                      item={item}
+                                      disable={parameterForDisablePersonalOfferButton}
+                />
+            }
+            if (items[i].id === 300) {
+                return <BackButton key={item.id}
+                                   active={i === cursor}
+                                   item={item}
+                />
             }
         }
     )
@@ -287,12 +298,9 @@ const PhonePage = () => {
                         <NavLink to={'/'}>
                             <button>OK</button>
                         </NavLink>
-
                     </div>
                 </ModalPopup>}
             </div>
         </div>
     );
 };
-
-export default PhonePage;
