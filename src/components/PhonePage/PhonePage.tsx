@@ -91,8 +91,6 @@ export const PhonePage = () => {
     const enterPress = useKeyPress('Enter', searchBox);
     const navigationBack = useNavigate()
 
-    console.log(phoneValue)
-
     const ButtonNumber = ({item, active, setHovered}: ButtonNumberType) => (
         <button className={`item ${active ? styles.activePhoneNumberButton : styles.phoneNumberButton}`}
                 onClick={() => onNumberButtonClickHandler(item.id.toString())}
@@ -145,7 +143,6 @@ export const PhonePage = () => {
         </button>
     )
 
-    console.log(cursor)
     useEffect(() => {
         if (items.length && downPress) {
             setCursor(prevState => {
@@ -205,7 +202,6 @@ export const PhonePage = () => {
 
 
     const changePhoneNumber = (e: string) => {
-        console.log(e)
         if (phoneValue.length === 0) {
             return setPhoneValue('7' + e)
         }
@@ -280,7 +276,6 @@ export const PhonePage = () => {
         }
     )
 
-    console.log(selected)
     return (
         <div className={styles.phonePageContainer}>
             <div className={styles.phoneInputBlock} ref={searchBox}>
