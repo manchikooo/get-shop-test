@@ -129,7 +129,7 @@ export const PhonePage = () => {
                 onClick={() => setModalActive(true)}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
-                disabled={false}
+                disabled={disable}
         >
             {item.name}
         </button>

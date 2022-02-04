@@ -65,7 +65,9 @@
     width: 140px;
     height: 55px;
     font-size: 25px;
-    border: 2px solid black;
+    border: 2px solid #EDEDED;
+    background-color: #EDEDED;
+    color: #01355F;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -76,10 +78,11 @@
     height: 55px;
     font-size: 25px;
     color: #EDEDED;
-    border: 2px solid #01355F;
+    border: 2px solid #EDEDED;
     background-color: #01355F;
     border-radius: 5px;
     cursor: pointer;
+
 }
 
 .checkboxContainerStyle {
@@ -88,13 +91,13 @@
     display: flex;
     align-items: center;
     color: #EDEDED;
+    width: 80%;
 }
 
 .checkboxContainerStyle input {
     width: 30px;
     height: 30px;
     margin-right: 10px;
-
 }
 
 .activeCheckboxContainerStyle {
@@ -107,6 +110,7 @@
     cursor: pointer;
     text-decoration: underline;
     font-weight: bold;
+    width: 80%;
 }
 
 .activeCheckboxContainerStyle input {
@@ -129,6 +133,7 @@
 .offerAndCanselButtonsContainer {
     margin-top: 120px;
     display: flex;
+    align-items: center;
     flex-direction: column;
     width: 100%;
 }
@@ -143,7 +148,7 @@
 }
 
 .offerButton {
-    width: 100%;
+    width: 80%;
     height: 52px;
     border: 2px solid;
     font-size: 20px;
@@ -152,7 +157,7 @@
 }
 
 .activeOfferButton {
-    width: 100%;
+    width: 80%;
     height: 52px;
     font-size: 20px;
     color: #EDEDED;
@@ -166,17 +171,18 @@
 .backButton {
     height: 52px;
     margin-top: 15px;
-    width: 100%;
+    width: 80%;
     border: 2px solid #01355F;
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 13px;
 }
 
 .activeBackButton {
     height: 52px;
     margin-top: 15px;
-    width: 100%;
+    width: 80%;
     font-size: 20px;
     color: #EDEDED;
     border: 2px solid #01355F;
@@ -184,9 +190,10 @@
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
+    margin-bottom: 13px;
 }
 
-.modalContentInfoBlock{
+.modalContentInfoBlock {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -197,6 +204,7 @@
     font-size: 30px;
     color: #01355F;
 }
+
 .submitPopupButton {
     width: 140px;
     height: 55px;
@@ -206,6 +214,7 @@
     background-color: #EDEDED;
     border-radius: 5px;
 }
+
 .submitPopupButton:hover {
     color: #EDEDED;
     background-color: #01355F;
