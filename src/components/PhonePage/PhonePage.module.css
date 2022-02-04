@@ -2,19 +2,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 
 }
+
 .phoneInputBlock {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .phoneInput {
     padding: 10px;
     font-size: 30px;
     border: 1px solid;
     border-radius: 5px;
 }
+
 .buttonsBlock {
     display: flex;
     justify-content: center;
@@ -23,12 +29,14 @@
     width: 300px;
     margin-top: 20px;
 }
+
 .phoneNumberButton {
     margin: 10px;
     width: 60px;
     padding: 10px;
     font-size: 25px;
 }
+
 .deleteButton {
     margin: 10px;
     width: 140px;
@@ -37,4 +45,23 @@
 
 .personalDataBlock {
     display: flex;
+}
+
+.activeItem {
+    margin: 10px;
+    width: 60px;
+    padding: 10px;
+    font-size: 25px;
+    background-color: red;
+}
+
+.checkboxStyle {
+    height: 30px;
+    width: 30px;
+    background-color: blue;
+}
+.navigationBackButton {
+    width: 200px;
+    height: 60px;
+    background-color: green;
 }

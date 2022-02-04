@@ -10,8 +10,6 @@ import {useNavigate} from "react-router-dom";
 export const SwiperComponent = () => {
     const imgForSwiper = 'https://icdn.lenta.ru/images/2021/04/27/16/20210427163138131/square_320_c09ebae17387b7d6eeb9fa0d42afe5ee.jpg'
 
-    const navigationToPreviousPage = useNavigate()
-
     return (
         <div className={styles.swiperContainer}>
             <Swiper
@@ -49,7 +47,6 @@ export const SwiperComponent = () => {
                     <h2>Some text 5</h2>
                 </SwiperSlide>
             </Swiper>
-            <button onClick={() => navigationToPreviousPage(-1)}>ОТМЕНА</button>
         </div>
     )
 };
