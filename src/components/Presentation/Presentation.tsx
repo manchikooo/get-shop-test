@@ -6,6 +6,17 @@ import {NavLink, useNavigate} from "react-router-dom";
 export function Presentation() {
     const navigationToPreviousPage = useNavigate()
 
+    // let shift = prevState + 3;
+    // if (prevState)
+    //     if (prevState < 11) shift = prevState + 3;
+    // if (items[cursor].id === 9) shift = prevState + 2;
+    // if (items[cursor].id >= 10) shift = prevState + 1;
+    // return shift;
+
+
+    // (prevState > 2 ? prevState - 3 : prevState)
+
+
     return (
         <div className={styles.presentationContainer}>
             <div className={styles.swiperAndInfoContainer}>

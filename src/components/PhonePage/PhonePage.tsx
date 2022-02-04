@@ -91,6 +91,8 @@ export const PhonePage = () => {
     const enterPress = useKeyPress('Enter', searchBox);
     const navigationBack = useNavigate()
 
+    console.log(phoneValue)
+
     const ButtonNumber = ({item, active, setHovered}: ButtonNumberType) => (
         <button className={`item ${active ? styles.activePhoneNumberButton : styles.phoneNumberButton}`}
                 onClick={() => onNumberButtonClickHandler(item.id.toString())}
@@ -146,14 +148,27 @@ export const PhonePage = () => {
     console.log(cursor)
     useEffect(() => {
         if (items.length && downPress) {
-            setCursor(prevState =>
-                prevState < 11 ? prevState + 3 : 1
+            setCursor(prevState => {
+                    let shift = prevState + 3;
+                    if (cursor < 11) shift = prevState + 3;
+                    if (cursor === 8) shift = prevState + 2;
+                    if (cursor >= 10) shift = prevState + 1
+                    if (cursor === 13) shift = 0;
+                    return shift;
+                }
             );
         }
     }, [downPress]);
     useEffect(() => {
         if (items.length && upPress) {
-            setCursor(prevState => (prevState > 2 ? prevState - 3 : prevState));
+            setCursor(prevState => {
+                let shift = prevState - 3
+                if (cursor > 2) shift = prevState - 3
+                if (cursor <= 2) shift = 13
+                if (cursor >= 11) shift = prevState - 1
+                // (prevState > 2 ? prevState - 3 : prevState)
+                return shift
+            });
         }
     }, [upPress]);
     useEffect(() => {
@@ -169,17 +184,17 @@ export const PhonePage = () => {
         }
     }, [leftPress]);
     useEffect(() => {
-        if (items[cursor].name === 'Delete' && enterPress) {
+        if (items[cursor].id === 10 && enterPress) {
             removeLastNumber()
         } else if (items[cursor].id === 100 && enterPress) {
             setAgreement(!agreement)
-        } else if (items[cursor].id === 200 && enterPress) {
+        } else if (items[cursor].id === 200 && enterPress && agreement) {
             setModalActive(true)
         } else if (items[cursor].id === 300 && enterPress) {
             navigationBack(-1)
-        } else if (items.length && enterPress && phoneValue.length === 0) {
+        } else if (items.length && enterPress && phoneValue.length === 0 && agreement) {
             setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
-        } else if (items.length && enterPress) {
+        } else if (items.length && enterPress && phoneValue.length < 11 && agreement) {
             setPhoneValue((phoneValue) => phoneValue + items[cursor].name);
         }
     }, [cursor, enterPress]);
