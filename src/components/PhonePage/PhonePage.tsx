@@ -166,7 +166,6 @@ export const PhonePage = () => {
                 if (cursor > 2) shift = prevState - 3
                 if (cursor <= 2) shift = 13
                 if (cursor >= 11) shift = prevState - 1
-                // (prevState > 2 ? prevState - 3 : prevState)
                 return shift
             });
         }
@@ -188,13 +187,13 @@ export const PhonePage = () => {
             removeLastNumber()
         } else if (items[cursor].id === 100 && enterPress) {
             setAgreement(!agreement)
-        } else if (items[cursor].id === 200 && enterPress && agreement) {
+        } else if (items[cursor].id === 200 && enterPress && agreement && phoneValue.length === 11) {
             setModalActive(true)
         } else if (items[cursor].id === 300 && enterPress) {
             navigationBack(-1)
-        } else if (items.length && enterPress && phoneValue.length === 0 && agreement) {
+        } else if (items.length && enterPress && phoneValue.length === 0 && items[cursor].id !== 200) {
             setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
-        } else if (items.length && enterPress && phoneValue.length < 11 && agreement) {
+        } else if (items.length && enterPress && phoneValue.length < 11 && items[cursor].id !== 200) {
             setPhoneValue((phoneValue) => phoneValue + items[cursor].name);
         }
     }, [cursor, enterPress]);
