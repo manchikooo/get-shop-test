@@ -61,6 +61,10 @@ type ListItemType = {
     setHovered: Dispatch<SetStateAction<ItemType | undefined>>,
     setPhoneValue: Dispatch<SetStateAction<string>>
 }
+type DeleteButtonType = {
+    item: ItemType,
+    active: boolean,
+}
 
 
 // <div className={`item ${active ? styles.activeItem : ''}`}
@@ -91,9 +95,17 @@ const PhonePage = () => {
     const [searchItem, setSearchItem] = useState<string>("")
 
     const ListItem = ({item, active, setSelected, setHovered, setPhoneValue}: ListItemType) => (
-
         <button className={`item ${active ? styles.activeItem : styles.phoneNumberButton}`}
                 onClick={() => onNumberButtonClickHandler(item.id.toString())}
+                onMouseEnter={() => setHovered(item)}
+                onMouseLeave={() => setHovered(undefined)}
+        >
+            {item.name}
+        </button>)
+
+    const DeleteButton = ({item, active}: DeleteButtonType) => (
+        <button className={`item ${active ? styles.activeItem : styles.phoneNumberButton}`}
+                onClick={removeLastNumber}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
         >
@@ -104,34 +116,38 @@ const PhonePage = () => {
         setSelected(undefined)
         setSearchItem(e.currentTarget.value)
     }
-
+    console.log(cursor)
     useEffect(() => {
         if (items.length && downPress) {
             setCursor(prevState =>
-                prevState < items.length - 1 ? prevState + 3 : prevState
+                prevState < 11 ? prevState + 3 : 1
             );
         }
     }, [downPress]);
     useEffect(() => {
         if (items.length && upPress) {
-            setCursor(prevState => (prevState > 0 ? prevState - 3 : prevState));
+            setCursor(prevState => (prevState > 2 ? prevState - 3 : prevState));
         }
     }, [upPress]);
     useEffect(() => {
         if (items.length && rightPress) {
             setCursor(prevState =>
-                prevState < items.length - 1 ? prevState + 1 : prevState
+                prevState < 13 ? prevState + 1 : 0
             );
         }
     }, [rightPress]);
     useEffect(() => {
         if (items.length && leftPress) {
-            setCursor(prevState => (prevState > 0 ? prevState - 1 : prevState));
+            setCursor(prevState => (prevState > 0 ? prevState - 1 : 13));
         }
     }, [leftPress]);
     useEffect(() => {
-        if (items.length && enterPress) {
-            setPhoneValue(phoneValue => phoneValue + items[cursor].name);
+        if (items[cursor].name === 'Delete' && enterPress) {
+            removeLastNumber()
+        } else if (items.length && enterPress && phoneValue.length === 0) {
+            setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
+        } else if (items.length && enterPress) {
+            setPhoneValue((phoneValue) => phoneValue + items[cursor].name);
         }
     }, [cursor, enterPress]);
     useEffect(() => {
@@ -222,11 +238,12 @@ const PhonePage = () => {
                 />
             }
             if (items[i].id === 10) {
-                return <div key={item.id}
-                            className={styles.deleteButton}
-                            onClick={removeLastNumber}>
-                    <button>{item.name}</button>
-                </div>
+                return <DeleteButton key={item.id} active={i === cursor} item={item}/>
+                // return <div key={item.id}
+                //             className={{active ? styles.activeItem : styles.phoneNumberButton}}
+                //             onClick={removeLastNumber}>
+                //     <button>{item.name}</button>
+                // </div>
 
             }
             if (items[i].id === 200) {
