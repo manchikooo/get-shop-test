@@ -1,7 +1,17 @@
 .phonePageContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.phoneInputBlockContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
 }
 
 .phoneInputBlock {
@@ -85,9 +95,34 @@
     cursor: pointer;
 }
 
+.offerAndCanselBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #EDEDED;
+    padding: 0 15px;
+    width: 50%;
+}
+
+.offerAndCanselButtonsContainer {
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.imgContainer{
+    width: 500px;
+}
+.imgContainer img {
+    margin-top: 100px;
+    width: 100%;
+}
+
 .offerButton {
-    width: 250px;
-    margin: 10px;
+    width: 100%;
+    height: 52px;
     border: 2px solid;
     font-size: 20px;
     border-radius: 5px;
@@ -95,17 +130,33 @@
 }
 
 .activeOfferButton {
-    width: 250px;
-    margin: 10px;
+    width: 100%;
+    height: 52px;
     font-size: 20px;
     color: red;
     border: 2px solid red;
     border-radius: 5px;
     padding: 10px;
+    cursor: pointer;
 }
 
-.navigationBackButton {
-    width: 200px;
-    height: 60px;
-    background-color: green;
+.backButton {
+    height: 52px;
+    margin-top: 15px;
+    width: 100%;
+    border: 2px solid;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.activeBackButton {
+    height: 52px;
+    margin-top: 15px;
+    width: 100%;
+    font-size: 20px;
+    color: red;
+    border: 2px solid red;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
 }

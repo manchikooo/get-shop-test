@@ -4,6 +4,7 @@ import 'react-phone-input-2/lib/style.css'
 import styles from './PhonePage.module.css'
 import {NavLink, useNavigate} from "react-router-dom";
 import {ModalPopup} from "../ModalPopup/ModalPopup";
+import navImg from '../../common/navigation.png'
 
 const useKeyPress = function (targetKey: string, ref: RefObject<HTMLInputElement>) {
     const [keyPressed, setKeyPressed] = useState<boolean>(false)
@@ -134,7 +135,7 @@ export const PhonePage = () => {
         </button>
     )
     const BackButton = ({item, active}: BackButtonType) => (
-        <button className={`item ${active ? styles.activeOfferButton : styles.offerButton}`}
+        <button className={`item ${active ? styles.activeBackButton : styles.backButton}`}
                 onClick={() => navigationBack(-1)}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
@@ -148,7 +149,8 @@ export const PhonePage = () => {
             setCursor(prevState => {
                     let shift = prevState + 3;
                     if (cursor < 11) shift = prevState + 3;
-                    if (cursor === 8) shift = prevState + 2;
+                    if (cursor === 8) shift = prevState + 2
+                    if (cursor === 9) shift = prevState + 2;
                     if (cursor >= 10) shift = prevState + 1
                     if (cursor === 13) shift = 0;
                     return shift;
@@ -169,14 +171,24 @@ export const PhonePage = () => {
     }, [upPress]);
     useEffect(() => {
         if (items.length && rightPress) {
-            setCursor(prevState =>
-                prevState < 13 ? prevState + 1 : 0
+            setCursor(prevState => {
+                    let shift = prevState + 1
+                    if (cursor === 2 || cursor === 5 || cursor === 8 || cursor === 10) shift = 12
+                    return shift
+                }
+                // prevState < 13 ? prevState + 1 : 0
             );
         }
     }, [rightPress]);
     useEffect(() => {
         if (items.length && leftPress) {
-            setCursor(prevState => (prevState > 0 ? prevState - 1 : 13));
+            setCursor(prevState => {
+                    let shift = prevState - 1
+                    if (cursor === 12) shift = 2
+                    if (cursor === 0) shift = 0
+                    return shift
+                }
+            );
         }
     }, [leftPress]);
     useEffect(() => {
@@ -260,55 +272,66 @@ export const PhonePage = () => {
                                              item={item}
                 />
             }
-            if (items[i].id === 200) {
-                return <PersonalOffer key={item.id}
-                                      active={i === cursor}
-                                      item={item}
-                                      disable={parameterForDisablePersonalOfferButton}
-                />
-            }
-            if (items[i].id === 300) {
-                return <BackButton key={item.id}
-                                   active={i === cursor}
-                                   item={item}
-                />
-            }
+
+
         }
     )
+    const mapped = items.map((item, i) => {
+        if (items[i].id === 200) {
+            return <PersonalOffer key={item.id}
+                                  active={i === cursor}
+                                  item={item}
+                                  disable={parameterForDisablePersonalOfferButton}
+            />
+        }
+        if (items[i].id === 300) {
+            return <BackButton key={item.id}
+                               active={i === cursor}
+                               item={item}
+            />
+        }
+    })
 
     return (
         <div className={styles.phonePageContainer}>
-            <div className={styles.phoneInputBlock} ref={searchBox}>
-                <PhoneInput
-                    onlyCountries={['ru']}
-                    inputStyle={{
-                        padding: '25px',
-                        width: '350px',
-                        marginLeft: '30px',
-                        fontSize: '25px',
-                        textAlign: 'center'
-                    }}
-                    value={phoneValue}
-                    placeholder={'+7(___)___-__-__'}
-                    onChange={e => changePhoneNumber(e)}
-                    masks={{ru: '(...) ...-..-..'}}
-                    inputProps={{
-                        autoFocus: true
-                    }}
+            <div className={styles.phoneInputBlockContainer}>
+                <div className={styles.phoneInputBlock} ref={searchBox}>
 
-                />
-                <div className={styles.buttonsBlock}>
-                    {mappedButtonsNumbers}
-                </div>
-                {modalActive && <ModalPopup modalActive={modalActive}
-                                            setModalActive={setModalActive}
-                >
-                    <div>
-                        <NavLink to={'/get-shop-test/'}>
-                            <button>OK</button>
-                        </NavLink>
+                    <PhoneInput
+                        onlyCountries={['ru']}
+                        inputStyle={{
+                            padding: '25px',
+                            width: '350px',
+                            marginLeft: '30px',
+                            fontSize: '25px',
+                            textAlign: 'center'
+                        }}
+                        value={phoneValue}
+                        placeholder={'+7(___)___-__-__'}
+                        onChange={e => changePhoneNumber(e)}
+                        masks={{ru: '(...) ...-..-..'}}
+                        inputProps={{
+                            autoFocus: true
+                        }}
+
+                    />
+                    <div className={styles.buttonsBlock}>
+                        {mappedButtonsNumbers}
                     </div>
-                </ModalPopup>}
+                    {modalActive && <ModalPopup modalActive={modalActive}
+                                                setModalActive={setModalActive}
+                    >
+                        <div>
+                            <NavLink to={'/get-shop-test/'}>
+                                <button>OK</button>
+                            </NavLink>
+                        </div>
+                    </ModalPopup>}
+                </div>
+            </div>
+            <div className={styles.offerAndCanselBlock}>
+                <div className={styles.offerAndCanselButtonsContainer}>{mapped}</div>
+                <div className={styles.imgContainer}><img src={navImg}/></div>
             </div>
         </div>
     );
