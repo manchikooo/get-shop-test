@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import styles from "../../GetShopTestApp.module.css";
 import ReactPlayer from "react-player";
 import {NavLink} from "react-router-dom";
@@ -19,6 +19,8 @@ export const ReactPlayerComponent = () => {
             <ReactPlayer height={'100%'}
                          width={'100%'}
                          playing={true}
+                         volume={0}
+                         muted={true}
                          onProgress={state => showBanner(state.playedSeconds)}
                          url={'https://www.youtube.com/watch?v=M7FIvfx5J10'}
             />
