@@ -17,7 +17,7 @@ export function Presentation() {
             </div>
             <div className={styles.buttonsContainer}>
                 <button onClick={() => navigationToPreviousPage(-1)}>ОТМЕНА</button>
-                <NavLink to={'/phone'}>
+                <NavLink to={'/get-shop-test/phone'}>
                     <button>ПОЛУЧИТЬ ПЕРСОНАЛЬНОЕ ПРЕДЛОЖЕНИЕ</button>
                 </NavLink>
             </div>

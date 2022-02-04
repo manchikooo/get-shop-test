@@ -295,7 +295,7 @@ export const PhonePage = () => {
                                             setModalActive={setModalActive}
                 >
                     <div>
-                        <NavLink to={'/'}>
+                        <NavLink to={'/get-shop-test/'}>
                             <button>OK</button>
                         </NavLink>
                     </div>

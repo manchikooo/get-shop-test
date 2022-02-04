@@ -23,7 +23,7 @@ export const ReactPlayerComponent = () => {
                          onProgress={state => showBanner(state.playedSeconds)}
                          url={'https://www.youtube.com/watch?v=M7FIvfx5J10'}
             />
-            {showNavLink ? <NavLink to={'/presentation'} className={styles.bannerStyle}>тык сюда</NavLink> : ''}
+            {showNavLink ? <NavLink to={'/get-shop-test/presentation'} className={styles.bannerStyle}>тык сюда</NavLink> : ''}
 
         </div>
     );

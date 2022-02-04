@@ -11,9 +11,9 @@ function App() {
     return (
         <div className={styles.App}>
             <Routes>
-                <Route path='/' element={<ReactPlayerComponent/>}/>
-                <Route path='/presentation' element={<Presentation/>}/>
-                <Route path='/phone' element={<PhonePage/>}/>
+                <Route path='/get-shop-test/' element={<ReactPlayerComponent/>}/>
+                <Route path='/get-shop-test/presentation' element={<Presentation/>}/>
+                <Route path='/get-shop-test/phone' element={<PhonePage/>}/>
             </Routes>
         </div>
     );
