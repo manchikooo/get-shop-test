@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './App.module.css'
+import styles from './GetShopTestApp.module.css'
 import {ReactPlayerComponent} from "./components/ReactPlayer/ReactPlayer";
 import {Routes, Route} from "react-router-dom";
 import {Presentation} from "./components/Presentation/Presentation";
 import {PhonePage} from "./components/PhonePage/PhonePage";
 
-function App() {
+function GetShopTestApp() {
 
 
     return (
@@ -19,4 +19,4 @@ function App() {
     );
 }
 
-export default App;
+export default GetShopTestApp;

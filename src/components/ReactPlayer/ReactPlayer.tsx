@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import styles from "../../App.module.css";
+import styles from "../../GetShopTestApp.module.css";
 import ReactPlayer from "react-player";
 import {NavLink} from "react-router-dom";
+import bannerImg from '../../common/banner.png'
 
 export const ReactPlayerComponent = () => {
 
@@ -21,7 +22,11 @@ export const ReactPlayerComponent = () => {
                          onProgress={state => showBanner(state.playedSeconds)}
                          url={'https://www.youtube.com/watch?v=M7FIvfx5J10'}
             />
-            {showNavLink ? <NavLink to={'/get-shop-test/presentation'} className={styles.bannerStyle}>тык сюда</NavLink> : ''}
+            {showNavLink &&
+                <NavLink to={'/get-shop-test/presentation'}
+                         className={styles.bannerStyle}>
+                    <img alt='banner' src={bannerImg}/>
+                </NavLink>}
         </div>
     );
 };

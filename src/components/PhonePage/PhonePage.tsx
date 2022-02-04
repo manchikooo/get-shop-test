@@ -208,7 +208,7 @@ export const PhonePage = () => {
         }
     }, [cursor, enterPress, backspacePress]);
 
-    console.log(cursor)
+    // console.log(cursor)
     const changePhoneNumber = (e: string) => {
         if (phoneValue.length === 0) {
             return setPhoneValue('7' + e)
@@ -232,13 +232,8 @@ export const PhonePage = () => {
             return
         }
     }
-    const removeLastNumber = () => {
-        if (phoneValue === '7') {
-            return
-        } else {
-            return setPhoneValue(phoneValue => phoneValue.slice(0, -1))
-        }
-    }
+
+    const removeLastNumber = () => setPhoneValue(phoneValue => phoneValue.slice(0, -1))
 
     const onPersonalDataCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAgreement(e.currentTarget.checked)
