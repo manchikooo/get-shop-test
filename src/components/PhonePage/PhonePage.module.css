@@ -4,6 +4,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    background-color: #01355F;
 }
 
 .phoneInputBlockContainer {
@@ -40,7 +41,9 @@
     width: 60px;
     padding: 10px;
     font-size: 25px;
-    border: 2px solid black;
+    border: 2px solid #EDEDED;
+    background-color: #EDEDED;
+    color: #01355F;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -50,8 +53,9 @@
     width: 60px;
     padding: 10px;
     font-size: 25px;
-    color: red;
-    border: 2px solid red;
+    color: #EDEDED;
+    border: 2px solid #EDEDED;
+    background-color: #01355F;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -71,28 +75,45 @@
     width: 140px;
     height: 55px;
     font-size: 25px;
-    color: red;
-    border: 2px solid red;
+    color: #EDEDED;
+    border: 2px solid #01355F;
+    background-color: #01355F;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .checkboxContainerStyle {
-    border: 1px solid;
-    border-radius: 5px;
     padding: 5px;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: #EDEDED;
+}
+
+.checkboxContainerStyle input {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+
 }
 
 .activeCheckboxContainerStyle {
-    border: 1px solid red;
-    border-radius: 5px;
+    background-color: #01355F;
+    color: #EDEDED;
     padding: 5px;
     font-size: 14px;
-    cursor: default;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
 }
+
 .activeCheckboxContainerStyle input {
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
 .offerAndCanselBlock {
@@ -112,9 +133,10 @@
     width: 100%;
 }
 
-.imgContainer{
+.imgContainer {
     width: 500px;
 }
+
 .imgContainer img {
     margin-top: 100px;
     width: 100%;
@@ -133,8 +155,9 @@
     width: 100%;
     height: 52px;
     font-size: 20px;
-    color: red;
-    border: 2px solid red;
+    color: #EDEDED;
+    border: 2px solid #01355F;
+    background-color: #01355F;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
@@ -144,19 +167,47 @@
     height: 52px;
     margin-top: 15px;
     width: 100%;
-    border: 2px solid;
+    border: 2px solid #01355F;
     font-size: 20px;
     border-radius: 5px;
     padding: 10px;
 }
+
 .activeBackButton {
     height: 52px;
     margin-top: 15px;
     width: 100%;
     font-size: 20px;
-    color: red;
-    border: 2px solid red;
+    color: #EDEDED;
+    border: 2px solid #01355F;
+    background-color: #01355F;
     border-radius: 5px;
     padding: 10px;
+    cursor: pointer;
+}
+
+.modalContentInfoBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: #01355F;
+}
+.submitPopupButton {
+    width: 140px;
+    height: 55px;
+    font-size: 25px;
+    color: #01355F;
+    border: 2px solid #01355F;
+    background-color: #EDEDED;
+    border-radius: 5px;
+}
+.submitPopupButton:hover {
+    color: #EDEDED;
+    background-color: #01355F;
     cursor: pointer;
 }

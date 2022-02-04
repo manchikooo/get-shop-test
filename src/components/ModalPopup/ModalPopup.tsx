@@ -14,7 +14,7 @@ export const ModalPopup = (props: ModalPopupPropsType) => {
 
     return (
         <div className={stylesForModalPopup} onClick={() => props.setModalActive(false)}>
-            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <div className={stylesForModalContent} onClick={e => e.stopPropagation()}>
                 {props.children}
             </div>
         </div>

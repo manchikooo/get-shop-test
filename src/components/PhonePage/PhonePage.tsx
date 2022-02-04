@@ -129,7 +129,7 @@ export const PhonePage = () => {
                 onClick={() => setModalActive(true)}
                 onMouseEnter={() => setHovered(item)}
                 onMouseLeave={() => setHovered(undefined)}
-                disabled={disable}
+                disabled={false}
         >
             {item.name}
         </button>
@@ -176,7 +176,6 @@ export const PhonePage = () => {
                     if (cursor === 2 || cursor === 5 || cursor === 8 || cursor === 10) shift = 12
                     return shift
                 }
-                // prevState < 13 ? prevState + 1 : 0
             );
         }
     }, [rightPress]);
@@ -304,7 +303,9 @@ export const PhonePage = () => {
                             width: '350px',
                             marginLeft: '30px',
                             fontSize: '25px',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            color: '#01355F',
+                            fontWeight: 'bold'
                         }}
                         value={phoneValue}
                         placeholder={'+7(___)___-__-__'}
@@ -318,20 +319,25 @@ export const PhonePage = () => {
                     <div className={styles.buttonsBlock}>
                         {mappedButtonsNumbers}
                     </div>
-                    {modalActive && <ModalPopup modalActive={modalActive}
-                                                setModalActive={setModalActive}
-                    >
-                        <div>
-                            <NavLink to={'/get-shop-test/'}>
-                                <button>OK</button>
-                            </NavLink>
-                        </div>
-                    </ModalPopup>}
+                    {modalActive &&
+                        <ModalPopup modalActive={modalActive}
+                                    setModalActive={setModalActive}
+                        >
+                            <div className={styles.modalContentInfoBlock}>
+                                <div>Мы свяжемся с Вами в ближайшее время</div>
+                                <div>
+                                    <NavLink to={'/get-shop-test/'}>
+                                        <button  onMouseEnter={() => setHovered(items[0])}
+                                                 onMouseLeave={() => setHovered(undefined)} className={styles.submitPopupButton}>OK</button>
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </ModalPopup>}
                 </div>
             </div>
             <div className={styles.offerAndCanselBlock}>
                 <div className={styles.offerAndCanselButtonsContainer}>{mapped}</div>
-                <div className={styles.imgContainer}><img src={navImg}/></div>
+                <div className={styles.imgContainer}><img alt='navigation image' src={navImg}/></div>
             </div>
         </div>
     );
