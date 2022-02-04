@@ -57,8 +57,8 @@ type ItemType = {
 type ButtonNumberType = {
     item: ItemType,
     active: boolean,
-    setSelected: Dispatch<SetStateAction<string | undefined>>,
-    setHovered: Dispatch<SetStateAction<ItemType | undefined>>,
+    setSelected: Dispatch<SetStateAction<string | null>>,
+    setHovered: Dispatch<SetStateAction<ItemType | null>>,
     setPhoneValue: Dispatch<SetStateAction<string>>
 }
 type DeleteButtonType = {
@@ -82,21 +82,22 @@ export const PhonePage = () => {
     const [modalActive, setModalActive] = useState<boolean>(false)
 
     const searchBox = createRef<HTMLInputElement>()
-    const [selected, setSelected] = useState<string | undefined>('')
+    const [selected, setSelected] = useState<string | null>(null)
     const [cursor, setCursor] = useState<number>(0);
-    const [hovered, setHovered] = useState<ItemType | undefined>(undefined);
+    const [hovered, setHovered] = useState<ItemType | null>(null);
     const downPress = useKeyPress('ArrowDown', searchBox);
     const upPress = useKeyPress('ArrowUp', searchBox);
     const leftPress = useKeyPress('ArrowLeft', searchBox);
     const rightPress = useKeyPress('ArrowRight', searchBox);
     const enterPress = useKeyPress('Enter', searchBox);
+    const backspacePress = useKeyPress('Backspace', searchBox);
     const navigationBack = useNavigate()
 
     const ButtonNumber = ({item, active, setHovered}: ButtonNumberType) => (
         <button className={`item ${active ? styles.activePhoneNumberButton : styles.phoneNumberButton}`}
                 onClick={() => onNumberButtonClickHandler(item.id.toString())}
                 onMouseEnter={() => setHovered(item)}
-                onMouseLeave={() => setHovered(undefined)}
+                onMouseLeave={() => setHovered(null)}
         >
             {item.name}
         </button>)
@@ -105,7 +106,7 @@ export const PhonePage = () => {
         <button className={`item ${active ? styles.activeDeleteButton : styles.deleteButton}`}
                 onClick={removeLastNumber}
                 onMouseEnter={() => setHovered(item)}
-                onMouseLeave={() => setHovered(undefined)}
+                onMouseLeave={() => setHovered(null)}
         >
             {item.name}
         </button>
@@ -114,7 +115,7 @@ export const PhonePage = () => {
     const PersonalDataCheckBox = ({item, active}: PersonalDataCheckboxType) => (
         <div className={`item ${active ? styles.activeCheckboxContainerStyle : styles.checkboxContainerStyle}`}
              onMouseEnter={() => setHovered(item)}
-             onMouseLeave={() => setHovered(undefined)}
+             onMouseLeave={() => setHovered(null)}
         >
             <input
                 type='checkbox'
@@ -128,7 +129,7 @@ export const PhonePage = () => {
         <button className={`item ${active ? styles.activeOfferButton : styles.offerButton}`}
                 onClick={() => setModalActive(true)}
                 onMouseEnter={() => setHovered(item)}
-                onMouseLeave={() => setHovered(undefined)}
+                onMouseLeave={() => setHovered(null)}
                 disabled={disable}
         >
             {item.name}
@@ -138,13 +139,21 @@ export const PhonePage = () => {
         <button className={`item ${active ? styles.activeBackButton : styles.backButton}`}
                 onClick={() => navigationBack(-1)}
                 onMouseEnter={() => setHovered(item)}
-                onMouseLeave={() => setHovered(undefined)}
+                onMouseLeave={() => setHovered(null)}
         >
             {item.name}
         </button>
     )
-
     useEffect(() => {
+        if (items.length && upPress) {
+            setCursor(prevState => {
+                let shift = prevState - 3
+                if (cursor > 2) shift = prevState - 3
+                if (cursor <= 2) shift = 13
+                if (cursor >= 11) shift = prevState - 1
+                return shift
+            });
+        }
         if (items.length && downPress) {
             setCursor(prevState => {
                     let shift = prevState + 3;
@@ -157,39 +166,30 @@ export const PhonePage = () => {
                 }
             );
         }
-    }, [downPress]);
-    useEffect(() => {
-        if (items.length && upPress) {
-            setCursor(prevState => {
-                let shift = prevState - 3
-                if (cursor > 2) shift = prevState - 3
-                if (cursor <= 2) shift = 13
-                if (cursor >= 11) shift = prevState - 1
-                return shift
-            });
-        }
-    }, [upPress]);
-    useEffect(() => {
         if (items.length && rightPress) {
             setCursor(prevState => {
                     let shift = prevState + 1
                     if (cursor === 2 || cursor === 5 || cursor === 8 || cursor === 10) shift = 12
+                    if (cursor === 13) shift = 0
                     return shift
                 }
             );
         }
-    }, [rightPress]);
-    useEffect(() => {
         if (items.length && leftPress) {
             setCursor(prevState => {
                     let shift = prevState - 1
                     if (cursor === 12) shift = 2
-                    if (cursor === 0) shift = 0
+                    if (cursor === 0) shift = 13
                     return shift
                 }
             );
         }
-    }, [leftPress]);
+        if (items.length && hovered) {
+            setCursor(items.indexOf(hovered));
+        }
+    }, [upPress, downPress, rightPress, leftPress, hovered]);
+
+
     useEffect(() => {
         if (items[cursor].id === 10 && enterPress) {
             removeLastNumber()
@@ -203,15 +203,12 @@ export const PhonePage = () => {
             setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
         } else if (items.length && enterPress && phoneValue.length < 11 && items[cursor].id !== 200) {
             setPhoneValue((phoneValue) => phoneValue + items[cursor].name);
+        } else if (backspacePress) {
+            removeLastNumber()
         }
-    }, [cursor, enterPress]);
-    useEffect(() => {
-        if (items.length && hovered) {
-            setCursor(items.indexOf(hovered));
-        }
-    }, [hovered]);
+    }, [cursor, enterPress, backspacePress]);
 
-
+    console.log(cursor)
     const changePhoneNumber = (e: string) => {
         if (phoneValue.length === 0) {
             return setPhoneValue('7' + e)
@@ -290,9 +287,9 @@ export const PhonePage = () => {
     })
 
     return (
-        <div className={styles.phonePageContainer}>
+        <div className={styles.phonePageContainer} ref={searchBox}>
             <div className={styles.phoneInputBlockContainer}>
-                <div className={styles.phoneInputBlock} ref={searchBox}>
+                <div className={styles.phoneInputBlock}>
                     <h2>Пожалуйста, введите номер телефона. Мы свяжемся с Вами в ближайшее время.</h2>
                     <div>
                         <PhoneInput
@@ -327,7 +324,7 @@ export const PhonePage = () => {
                                 <div>
                                     <NavLink to={'/get-shop-test/'}>
                                         <button onMouseEnter={() => setHovered(items[0])}
-                                                onMouseLeave={() => setHovered(undefined)}
+                                                onMouseLeave={() => setHovered(null)}
                                                 className={styles.submitPopupButton}>OK
                                         </button>
                                     </NavLink>

@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "../../App.module.css";
 import ReactPlayer from "react-player";
 import {NavLink} from "react-router-dom";
-import {log} from "util";
-
 
 export const ReactPlayerComponent = () => {
 
@@ -19,12 +17,11 @@ export const ReactPlayerComponent = () => {
         <div className={styles.playerContainer}>
             <ReactPlayer height={'100%'}
                          width={'100%'}
-                         controls
+                         playing={true}
                          onProgress={state => showBanner(state.playedSeconds)}
                          url={'https://www.youtube.com/watch?v=M7FIvfx5J10'}
             />
             {showNavLink ? <NavLink to={'/get-shop-test/presentation'} className={styles.bannerStyle}>тык сюда</NavLink> : ''}
-
         </div>
     );
 };
