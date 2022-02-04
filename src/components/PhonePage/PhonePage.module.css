@@ -9,7 +9,7 @@
 
 .phoneInputBlockContainer {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     height: 100%;
     width: 50%;
@@ -19,6 +19,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.phoneInputBlock h2 {
+    text-align: center;
+    color: #EDEDED;
+    margin: 49px 0 ;
 }
 
 .phoneInput {
@@ -95,18 +100,19 @@
 }
 
 .checkboxContainerStyle input {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin-right: 10px;
+    margin-left: 20px;
 }
 
 .activeCheckboxContainerStyle {
+    display: flex;
+    align-items: center;
     background-color: #01355F;
     color: #EDEDED;
     padding: 5px;
     font-size: 14px;
-    display: flex;
-    align-items: center;
     cursor: pointer;
     text-decoration: underline;
     font-weight: bold;
@@ -115,9 +121,10 @@
 
 .activeCheckboxContainerStyle input {
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin-right: 10px;
+    margin-left: 20px;
 }
 
 .offerAndCanselBlock {

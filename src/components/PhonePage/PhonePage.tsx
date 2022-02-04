@@ -44,7 +44,7 @@ const items = [
     {id: 9, name: '9'},
     {id: 0, name: '0'},
     {id: 10, name: 'Delete'},
-    {id: 100, name: 'Согласен на обработку ПД'},
+    {id: 100, name: 'Согласен на обработку персональных данных'},
     {id: 200, name: 'Получить персональное предложение'},
     {id: 300, name: 'Отмена'},
 ]
@@ -120,7 +120,7 @@ export const PhonePage = () => {
                 type='checkbox'
                 checked={agreement}
                 onChange={onPersonalDataCheckboxClick}
-            />{item.name}
+            /><span onClick={() => setAgreement(!agreement)}>{item.name}</span>
         </div>
     )
 
@@ -271,8 +271,6 @@ export const PhonePage = () => {
                                              item={item}
                 />
             }
-
-
         }
     )
     const mapped = items.map((item, i) => {
@@ -295,27 +293,28 @@ export const PhonePage = () => {
         <div className={styles.phonePageContainer}>
             <div className={styles.phoneInputBlockContainer}>
                 <div className={styles.phoneInputBlock} ref={searchBox}>
-
-                    <PhoneInput
-                        onlyCountries={['ru']}
-                        inputStyle={{
-                            padding: '25px',
-                            width: '350px',
-                            marginLeft: '30px',
-                            fontSize: '25px',
-                            textAlign: 'center',
-                            color: '#01355F',
-                            fontWeight: 'bold'
-                        }}
-                        value={phoneValue}
-                        placeholder={'+7(___)___-__-__'}
-                        onChange={e => changePhoneNumber(e)}
-                        masks={{ru: '(...) ...-..-..'}}
-                        inputProps={{
-                            autoFocus: true
-                        }}
-
-                    />
+                    <h2>Пожалуйста, введите номер телефона. Мы свяжемся с Вами в ближайшее время.</h2>
+                    <div>
+                        <PhoneInput
+                            onlyCountries={['ru']}
+                            inputStyle={{
+                                padding: '25px',
+                                width: '350px',
+                                marginLeft: '30px',
+                                fontSize: '25px',
+                                textAlign: 'center',
+                                color: '#01355F',
+                                fontWeight: 'bold',
+                            }}
+                            value={phoneValue}
+                            placeholder={'+7(___)___-__-__'}
+                            onChange={e => changePhoneNumber(e)}
+                            masks={{ru: '(...) ...-..-..'}}
+                            inputProps={{
+                                autoFocus: true
+                            }}
+                        />
+                    </div>
                     <div className={styles.buttonsBlock}>
                         {mappedButtonsNumbers}
                     </div>
@@ -327,8 +326,10 @@ export const PhonePage = () => {
                                 <div>Мы свяжемся с Вами в ближайшее время</div>
                                 <div>
                                     <NavLink to={'/get-shop-test/'}>
-                                        <button  onMouseEnter={() => setHovered(items[0])}
-                                                 onMouseLeave={() => setHovered(undefined)} className={styles.submitPopupButton}>OK</button>
+                                        <button onMouseEnter={() => setHovered(items[0])}
+                                                onMouseLeave={() => setHovered(undefined)}
+                                                className={styles.submitPopupButton}>OK
+                                        </button>
                                     </NavLink>
                                 </div>
                             </div>
@@ -337,7 +338,9 @@ export const PhonePage = () => {
             </div>
             <div className={styles.offerAndCanselBlock}>
                 <div className={styles.offerAndCanselButtonsContainer}>{mapped}</div>
-                <div className={styles.imgContainer}><img alt='navigation image' src={navImg}/></div>
+                <div className={styles.imgContainer}>
+                    <img alt='navigation image' src={navImg}/>
+                </div>
             </div>
         </div>
     );

@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Keyboard, Navigation, Pagination} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import styles from './SwiperComponent.module.css'
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {useNavigate} from "react-router-dom";
+import imgForSwiper from '../../common/imgForSwiper.jpeg'
 
 export const SwiperComponent = () => {
-    const imgForSwiper = 'https://icdn.lenta.ru/images/2021/04/27/16/20210427163138131/square_320_c09ebae17387b7d6eeb9fa0d42afe5ee.jpg'
 
     return (
         <div className={styles.swiperContainer}>
