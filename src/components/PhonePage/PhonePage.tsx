@@ -6,10 +6,33 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {ModalPopup} from "../ModalPopup/ModalPopup";
 import navImg from '../../common/navigation.png'
 
+type ItemType = {
+    id: number,
+    name: string
+}
+type ButtonNumberType = {
+    item: ItemType,
+    active: boolean,
+    setSelected: Dispatch<SetStateAction<string | null>>,
+    setHovered: Dispatch<SetStateAction<ItemType | null>>,
+    setPhoneValue: Dispatch<SetStateAction<string>>
+}
+type DeleteButtonType = {
+    item: ItemType,
+    active: boolean,
+}
+type PersonalDataCheckboxType = DeleteButtonType
+type PersonalOfferType = {
+    item: ItemType,
+    active: boolean,
+    disable: boolean
+}
+type BackButtonType = DeleteButtonType
+
 const useKeyPress = function (targetKey: string, ref: RefObject<HTMLInputElement>) {
     const [keyPressed, setKeyPressed] = useState<boolean>(false)
 
-    function downHandler({key}: { key: string }) {
+    const downHandler = ({key}: { key: string }) => {
         if (key === targetKey) {
             setKeyPressed(true)
         }
@@ -49,31 +72,6 @@ const items = [
     {id: 300, name: 'Отмена'},
 ]
 
-type ItemType = {
-    id: number,
-    name: string
-}
-
-type ButtonNumberType = {
-    item: ItemType,
-    active: boolean,
-    setSelected: Dispatch<SetStateAction<string | null>>,
-    setHovered: Dispatch<SetStateAction<ItemType | null>>,
-    setPhoneValue: Dispatch<SetStateAction<string>>
-}
-type DeleteButtonType = {
-    item: ItemType,
-    active: boolean,
-}
-type PersonalDataCheckboxType = DeleteButtonType
-
-type PersonalOfferType = {
-    item: ItemType,
-    active: boolean,
-    disable: boolean
-}
-
-type BackButtonType = DeleteButtonType
 
 export const PhonePage = () => {
 
@@ -146,7 +144,7 @@ export const PhonePage = () => {
             {item.name}
         </button>
     )
-    console.log(cursor)
+
     useEffect(() => {
         if (cursor === 14) {
             ref?.current?.focus()
@@ -220,7 +218,6 @@ export const PhonePage = () => {
         }
     }, [cursor, enterPress, backspacePress]);
 
-    // console.log(cursor)
     const changePhoneNumber = (e: string) => {
         if (phoneValue.length === 0) {
             return setPhoneValue('7' + e)
@@ -292,7 +289,7 @@ export const PhonePage = () => {
             />
         }
     })
-    console.log(phoneValue)
+
     return (
         <div className={styles.phonePageContainer} ref={searchBox}>
             <div className={styles.phoneInputBlockContainer}>
@@ -315,7 +312,6 @@ export const PhonePage = () => {
                             onChange={e => changePhoneNumber(e)}
                             masks={{ru: '(...) ...-..-..'}}
                             inputProps={{
-                                // focus: (cursor === 14) + '',
                                 autoFocus: true,
                                 ref: ref
                             }}
@@ -345,7 +341,7 @@ export const PhonePage = () => {
             <div className={styles.offerAndCanselBlock}>
                 <div className={styles.offerAndCanselButtonsContainer}>{mapped}</div>
                 <div className={styles.imgContainer}>
-                    <img alt='navigation image' src={navImg}/>
+                    <img alt='navigation img' src={navImg}/>
                 </div>
             </div>
         </div>

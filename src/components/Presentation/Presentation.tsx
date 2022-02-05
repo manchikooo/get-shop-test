@@ -19,7 +19,7 @@ export function Presentation() {
             </div>
             <div className={styles.buttonsContainer}>
                 <div className={styles.infoContainer}>
-                    <img alt='presentationInfo image'
+                    <img alt='presentationInfo img'
                         src={presentationInfo}/>
                 </div>
                 <NavLink className={styles.personalOfferButton} to={'/get-shop-test/phone'}>

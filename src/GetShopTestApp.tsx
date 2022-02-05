@@ -5,11 +5,9 @@ import {Routes, Route} from "react-router-dom";
 import {Presentation} from "./components/Presentation/Presentation";
 import {PhonePage} from "./components/PhonePage/PhonePage";
 
-function GetShopTestApp() {
-
-
+export const GetShopTestApp = () => {
     return (
-        <div className={styles.App}>
+        <div className={styles.GetShopTestAppStyles}>
             <Routes>
                 <Route path='/get-shop-test/' element={<ReactPlayerComponent/>}/>
                 <Route path='/get-shop-test/presentation' element={<Presentation/>}/>
@@ -18,5 +16,3 @@ function GetShopTestApp() {
         </div>
     );
 }
-
-export default GetShopTestApp;
