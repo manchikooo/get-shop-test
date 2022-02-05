@@ -1,4 +1,4 @@
-import React, {createRef, Dispatch, RefObject, SetStateAction, useEffect, useState} from 'react';
+import React, {createRef, Dispatch, RefObject, SetStateAction, useEffect, useRef, useState} from 'react';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import styles from './PhonePage.module.css'
@@ -77,13 +77,15 @@ type BackButtonType = DeleteButtonType
 
 export const PhonePage = () => {
 
+    const ref = useRef<HTMLInputElement>()
+
     const [phoneValue, setPhoneValue] = useState<string>('')
     const [agreement, setAgreement] = useState<boolean>(false)
     const [modalActive, setModalActive] = useState<boolean>(false)
 
     const searchBox = createRef<HTMLInputElement>()
     const [selected, setSelected] = useState<string | null>(null)
-    const [cursor, setCursor] = useState<number>(0);
+    const [cursor, setCursor] = useState<number>(14);
     const [hovered, setHovered] = useState<ItemType | null>(null);
     const downPress = useKeyPress('ArrowDown', searchBox);
     const upPress = useKeyPress('ArrowUp', searchBox);
@@ -144,13 +146,22 @@ export const PhonePage = () => {
             {item.name}
         </button>
     )
+    console.log(cursor)
     useEffect(() => {
-        if (items.length && upPress) {
+        if (cursor === 14) {
+            ref?.current?.focus()
+        } else ref?.current?.blur()
+    }, [cursor])
+
+    useEffect(() => {
+        if (upPress) {
             setCursor(prevState => {
                 let shift = prevState - 3
                 if (cursor > 2) shift = prevState - 3
-                if (cursor <= 2) shift = 13
+                // if (cursor <= 2) shift = 13
                 if (cursor >= 11) shift = prevState - 1
+                if (cursor < 3) shift = 14
+                if (cursor === 14) shift = 13
                 return shift
             });
         }
@@ -161,7 +172,8 @@ export const PhonePage = () => {
                     if (cursor === 8) shift = prevState + 2
                     if (cursor === 9) shift = prevState + 2;
                     if (cursor >= 10) shift = prevState + 1
-                    if (cursor === 13) shift = 0;
+                    if (cursor === 13) shift = 14;
+                    if (cursor === 14) shift = 0;
                     return shift;
                 }
             );
@@ -191,18 +203,18 @@ export const PhonePage = () => {
 
 
     useEffect(() => {
-        if (items[cursor].id === 10 && enterPress) {
+        if (items[cursor]?.id === 10 && enterPress) {
             removeLastNumber()
-        } else if (items[cursor].id === 100 && enterPress) {
+        } else if (items[cursor]?.id === 100 && enterPress) {
             setAgreement(!agreement)
-        } else if (items[cursor].id === 200 && enterPress && agreement && phoneValue.length === 11) {
+        } else if (items[cursor]?.id === 200 && enterPress && agreement && phoneValue.length === 11) {
             setModalActive(true)
-        } else if (items[cursor].id === 300 && enterPress) {
+        } else if (items[cursor]?.id === 300 && enterPress) {
             navigationBack(-1)
-        } else if (items.length && enterPress && phoneValue.length === 0 && items[cursor].id !== 200) {
-            setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor].name);
-        } else if (items.length && enterPress && phoneValue.length < 11 && items[cursor].id !== 200) {
-            setPhoneValue((phoneValue) => phoneValue + items[cursor].name);
+        } else if (enterPress && phoneValue.length === 0 && items[cursor]?.id !== 200) {
+            setPhoneValue((phoneValue) => '7' + phoneValue + items[cursor]?.name);
+        } else if (enterPress && phoneValue.length < 11 && items[cursor]?.id !== 200) {
+            setPhoneValue((phoneValue) => phoneValue + items[cursor]?.name);
         } else if (backspacePress) {
             removeLastNumber()
         }
@@ -280,7 +292,7 @@ export const PhonePage = () => {
             />
         }
     })
-
+    console.log(phoneValue)
     return (
         <div className={styles.phonePageContainer} ref={searchBox}>
             <div className={styles.phoneInputBlockContainer}>
@@ -303,7 +315,9 @@ export const PhonePage = () => {
                             onChange={e => changePhoneNumber(e)}
                             masks={{ru: '(...) ...-..-..'}}
                             inputProps={{
-                                autoFocus: true
+                                // focus: (cursor === 14) + '',
+                                autoFocus: true,
+                                ref: ref
                             }}
                         />
                     </div>
