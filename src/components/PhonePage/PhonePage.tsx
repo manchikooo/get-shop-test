@@ -274,7 +274,7 @@ export const PhonePage = () => {
             }
         }
     )
-    const mapped = items.map((item, i) => {
+    const mappedButtonstOfferAndBack = items.map((item, i) => {
         if (items[i].id === 200) {
             return <PersonalOffer key={item.id}
                                   active={i === cursor}
@@ -339,7 +339,7 @@ export const PhonePage = () => {
                 </div>
             </div>
             <div className={styles.offerAndCanselBlock}>
-                <div className={styles.offerAndCanselButtonsContainer}>{mapped}</div>
+                <div className={styles.offerAndCanselButtonsContainer}>{mappedButtonstOfferAndBack}</div>
                 <div className={styles.imgContainer}>
                     <img alt='navigation img' src={navImg}/>
                 </div>
@@ -347,3 +347,4 @@ export const PhonePage = () => {
         </div>
     );
 };
+
